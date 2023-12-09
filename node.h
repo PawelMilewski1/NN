@@ -5,11 +5,11 @@
 
 class node {
     public:
-        std::vector<float> weights;
-        float bias;
-        float preActivationValue=0;
-        float activationValue=0;
-        float delta=0;
+        std::vector<double> weights;
+        double bias;
+        double preActivationValue=0;
+        double activationValue=0;
+        double delta=0;
 };
 
 #endif //node_h

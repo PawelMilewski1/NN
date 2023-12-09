@@ -14,10 +14,11 @@ class NeuralNetwork {
         int hiddenSize;
         int outputSize;
         void initNN(NeuralNetwork& inputNN, std::string initialNN);
-        NeuralNetwork backPropLearning(std::string trainingSet, NeuralNetwork& inputNN, int epochCount, float learningRate);
+        NeuralNetwork backPropLearning(std::string trainingSet, NeuralNetwork& inputNN, int epochCount, double learningRate);
         void createFile(NeuralNetwork& inputNN, std::string outputFileInput);
-        float sigmoid(float x);
-        float sigmoidPrime(float x);
+        double sigmoid(double x);
+        double sigmoidPrime(double x);
+        double test(NeuralNetwork& inputNN, std::string testingSet, std::string outputFileInput);
 };
 
 #endif // NN_H
