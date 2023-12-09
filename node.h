@@ -1,3 +1,8 @@
+/*
+Pawel Milewski - Fall 2023
+Variables for class "node"
+*/
+
 #include <vector>
 
 #ifndef node_h

@@ -1,3 +1,8 @@
+/*
+Pawel Milewski - Fall 2023
+Definitions for functions for class "NeuralNetwork"
+*/
+
 #include "NN.h"
 #include "node.h"
 

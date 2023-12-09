@@ -1,3 +1,8 @@
+/*
+Pawel Milewski - Fall 2023
+Variables and functions for class "NeuralNetwork"
+*/
+
 #include <vector>
 #include <string>
 

@@ -1,3 +1,8 @@
+/*
+Pawel Milewski - Fall 2023
+Main file to run the program
+*/
+
 #include <iostream>
 #include "NN.h"
 
