@@ -54,7 +54,7 @@ double NeuralNetwork::test(NeuralNetwork& inputNN, std::string testingSet, std::
                 outputs.push_back(value);
             }
         }
-
+        // forward propagate the input and output
         for (int i3= 0; i3 < inputNN.inputSize; i3++) {
             inputNN.neuralNet[0][i3].activationValue = inputs[i3];
         }
@@ -74,7 +74,7 @@ double NeuralNetwork::test(NeuralNetwork& inputNN, std::string testingSet, std::
             }
             inputNN.neuralNet[2][i3].activationValue = inputNN.sigmoid(inputNN.neuralNet[2][i3].preActivationValue);              
         }
-
+        // record and compare output
         for (int i3 = 0; i3< inputNN.outputSize; i3++) {
             if (inputNN.neuralNet[2][i3].activationValue >= 0.5 && outputs[i3] == 1) {
                 ABCD[i3][0]+=1.0;
@@ -92,7 +92,7 @@ double NeuralNetwork::test(NeuralNetwork& inputNN, std::string testingSet, std::
         }
     }
 
-
+    // A B C D and following calculations as well as results file output
 
     double overallAccuracy = 0.0, precision = 0.0, recall = 0.0, f1 = 0.0;
     double totaloverallAccuracy = 0.0, totalprecision = 0.0, totalrecall = 0.0;
@@ -134,7 +134,7 @@ double NeuralNetwork::test(NeuralNetwork& inputNN, std::string testingSet, std::
     return f1;
 }
 
-void NeuralNetwork::initNN(NeuralNetwork& inputNN, std::string initialNN) {
+void NeuralNetwork::initNN(NeuralNetwork& inputNN, std::string initialNN) { //resize to proper sizing, and input initial weights
     std::ifstream inputFile(initialNN);
 
     std::string inputLine;
@@ -188,6 +188,7 @@ void NeuralNetwork::initNN(NeuralNetwork& inputNN, std::string initialNN) {
     inputNN.createFile(inputNN, "input.txt");
 }
 
+// following pseudocode 
 NeuralNetwork NeuralNetwork::backPropLearning(std::string trainingSet, NeuralNetwork& inputNN, int epochCount, double learningRate) {
     std::ifstream inputFile(trainingSet);
 
@@ -227,7 +228,7 @@ NeuralNetwork NeuralNetwork::backPropLearning(std::string trainingSet, NeuralNet
                 }
             }
 
-            for (int i3= 0; i3 < inputNN.inputSize; i3++) {
+            for (int i3= 0; i3 < inputNN.inputSize; i3++) { // first propagate forward
                 inputNN.neuralNet[0][i3].activationValue = inputs[i3];
             }
 
@@ -246,7 +247,7 @@ NeuralNetwork NeuralNetwork::backPropLearning(std::string trainingSet, NeuralNet
                 }
                 inputNN.neuralNet[2][i3].activationValue = inputNN.sigmoid(inputNN.neuralNet[2][i3].preActivationValue);              
             }
-
+            // then propagate backward
             for (int i3 = 0; i3 < inputNN.outputSize; i3++) {
                 inputNN.neuralNet[2][i3].delta = inputNN.sigmoidPrime(inputNN.neuralNet[2][i3].preActivationValue) * (outputs[i3] - inputNN.neuralNet[2][i3].activationValue);
             }
@@ -258,7 +259,7 @@ NeuralNetwork NeuralNetwork::backPropLearning(std::string trainingSet, NeuralNet
                 }
                 inputNN.neuralNet[1][i3].delta = inputNN.sigmoidPrime(inputNN.neuralNet[1][i3].preActivationValue) * sum;
             }
-
+            // update every weight and bias
             for (int output = 0; output < inputNN.outputSize; output++) {
                 for (int outputinput = 0; outputinput < inputNN.hiddenSize; outputinput++) {
                     inputNN.neuralNet[2][output].weights[outputinput] += learningRate * inputNN.neuralNet[1][outputinput].activationValue * inputNN.neuralNet[2][output].delta;
@@ -272,7 +273,7 @@ NeuralNetwork NeuralNetwork::backPropLearning(std::string trainingSet, NeuralNet
                 }
                 inputNN.neuralNet[1][hidden].bias = inputNN.neuralNet[1][hidden].bias + learningRate * -1 * inputNN.neuralNet[1][hidden].delta;
             }
-
+            // reset values for next input output (dont touch weights)
             for (int i3 = 0; i3 < inputNN.inputSize; i3++) {
                 inputNN.neuralNet[0][i3].preActivationValue = 0;
                 inputNN.neuralNet[0][i3].activationValue = 0;
@@ -296,7 +297,7 @@ NeuralNetwork NeuralNetwork::backPropLearning(std::string trainingSet, NeuralNet
     return inputNN;
 }
 
-void NeuralNetwork::createFile(NeuralNetwork& inputNN, std::string outputFileInput) {
+void NeuralNetwork::createFile(NeuralNetwork& inputNN, std::string outputFileInput) { // output creation for trained
     std::ofstream outputFile(outputFileInput);
     outputFile << inputNN.inputSize << " " << inputNN.hiddenSize << " " << inputNN.outputSize << "\n";
     for (int i = 0; i < inputNN.hiddenSize; i++) {

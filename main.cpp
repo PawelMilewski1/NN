@@ -37,7 +37,7 @@ int main() {
         NeuralNet.initNN(NeuralNet, initialNN);
         NeuralNet.backPropLearning(trainingSet, NeuralNet, epochCount, learningRate);
         NeuralNet.createFile(NeuralNet, outputFile);
-    } else if (trainortest == '2') {
+    } else if (trainortest == '2') { // test
         std::cout << "Neural Net:";
         std::string initialNN;
         std::cin >> initialNN;
@@ -54,7 +54,7 @@ int main() {
 
         NeuralNet.initNN(NeuralNet, initialNN);
         NeuralNet.test(NeuralNet, testingSet, outputFile);
-    } else {
+    } else { // test different hidden layer sizes, epoch counts and learning rates
         std::string initialNN = "concrete.init";
         std::string trainingSet = "concrete.train";
         std::string trainedNN = "o.txt";
